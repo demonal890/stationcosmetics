@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  input { font-family: inherit; }
+  i[data-lucide] { display: inline-flex; }
+  .lucide { stroke-width: 1.6; }
+  @keyframes sc-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes sc-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+</style>
+</helmet>
+<div style="--accent: {{ accent }}; font-family: 'Manrope', sans-serif; color: #2B2320; background: #ffffff; overflow-x: hidden; position: relative;">
+
+  <!-- announcement -->
+  <a href="#promo" style="display:flex; align-items:center; justify-content:center; gap:8px; background: var(--accent, #C05B6B); color:#fff; text-decoration:none; font-size:13px; font-weight:600; letter-spacing:.01em; padding:9px 16px; text-align:center;">
+    <i data-lucide="flame" style="width:15px;height:15px;"></i>
+    <span>{{ announce }}</span>
+  </a>
+
+  <!-- header -->
+  <header style="position:sticky; top:0; z-index:50; background:rgba(255,255,255,.9); backdrop-filter:blur(10px); border-bottom:1px solid #F0E6DE;">
+    <div style="max-width:1180px; margin:0 auto; padding:14px 20px; display:flex; align-items:center; justify-content:space-between; gap:16px;">
+      <a href="#top" style="text-decoration:none; line-height:1;">
+        <div style="font-family:'Playfair Display',serif; font-size:22px; font-weight:700; letter-spacing:.22em; color:#2B2320;">STATION</div>
+        <div style="font-size:9px; font-weight:700; letter-spacing:.5em; color:var(--accent,#C05B6B); margin-top:2px; padding-left:.5em;">COSMETICS</div>
+      </a>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <a href="{{ wa }}" target="_blank" style="display:inline-flex; align-items:center; gap:7px; background:var(--accent,#C05B6B); color:#fff; text-decoration:none; font-size:13.5px; font-weight:700; padding:9px 15px; border-radius:999px;" style-hover="background:#A94D5D;">
+          <i data-lucide="message-circle" style="width:16px;height:16px;"></i>
+          <span>Chat</span>
+        </a>
+        <button onClick="{{ toggleMenu }}" aria-label="Menu" style="display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border:1px solid #EAD9CF; background:#fff; border-radius:12px; cursor:pointer; color:#2B2320;">
+          <i data-lucide="menu" style="width:20px;height:20px;"></i>
+        </button>
+      </div>
+    </div>
+    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+      <nav style="border-top:1px solid #F0E6DE; background:#fff;">
+        <div style="max-width:1180px; margin:0 auto; padding:6px 12px; display:flex; flex-wrap:wrap;">
+          <sc-for list="{{ navLinks }}" as="link" hint-placeholder-count="5">
+            <a href="{{ link.href }}" onClick="{{ closeMenu }}" style="flex:1 1 40%; text-decoration:none; color:#3A312C; font-size:15px; font-weight:600; padding:13px 12px; border-radius:10px;" style-hover="background:#FBEDE9; color:var(--accent,#C05B6B);">{{ link.label }}</a>
+          </sc-for>
+        </div>
+      </nav>
+    </sc-if>
+  </header>
+
+  <!-- hero -->
+  <section id="top" style="position:relative; min-height:clamp(480px, 82vh, 640px); display:flex; align-items:flex-end; background-image:linear-gradient(90deg, rgba(28,20,18,.86) 0%, rgba(28,20,18,.55) 46%, rgba(28,20,18,.12) 100%), url('uploads/img-1.jpg'); background-size:cover; background-position:center;">
+    <div style="max-width:1180px; margin:0 auto; width:100%; padding:0 20px 52px;">
+      <div style="max-width:600px;">
+        <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.28); backdrop-filter:blur(4px); color:#fff; font-size:12px; font-weight:600; letter-spacing:.04em; padding:7px 13px; border-radius:999px; margin-bottom:20px;">
+          <i data-lucide="map-pin" style="width:14px;height:14px;"></i>
+          <span>Toko fisik di Medan Selayang</span>
+        </div>
+        <h1 style="font-family:'Playfair Display',serif; font-weight:700; font-size:clamp(34px, 8vw, 58px); line-height:1.05; color:#fff; margin:0 0 16px; letter-spacing:-.01em; text-wrap:balance;">Kosmetik &amp; Skincare Terlengkap di Medan</h1>
+        <p style="color:rgba(255,255,255,.88); font-size:clamp(15px,4vw,18px); line-height:1.6; margin:0 0 26px; max-width:460px;">Makeup, skincare, bodycare &amp; parfum original dari ratusan brand favorit — semua ada di Station Cosmetics.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:12px;">
+          <a href="{{ wa }}" target="_blank" style="display:inline-flex; align-items:center; gap:9px; background:var(--accent,#C05B6B); color:#fff; text-decoration:none; font-size:15.5px; font-weight:700; padding:15px 24px; border-radius:999px; box-shadow:0 10px 26px -8px rgba(192,91,107,.7);" style-hover="background:#A94D5D;">
+            <i data-lucide="message-circle" style="width:19px;height:19px;"></i>
+            <span>Chat via WhatsApp</span>
+          </a>
+          <a href="#produk" style="display:inline-flex; align-items:center; gap:9px; background:rgba(255,255,255,.12); border:1.5px solid rgba(255,255,255,.55); color:#fff; text-decoration:none; font-size:15.5px; font-weight:700; padding:15px 24px; border-radius:999px; backdrop-filter:blur(4px);" style-hover="background:rgba(255,255,255,.22);">
+            <span>Lihat Katalog</span>
+            <i data-lucide="arrow-down" style="width:18px;height:18px;"></i>
+          </a>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:10px 22px; margin-top:26px;">
+          <sc-for list="{{ trust }}" as="t" hint-placeholder-count="3">
+            <span style="display:inline-flex; align-items:center; gap:7px; color:rgba(255,255,255,.9); font-size:13.5px; font-weight:500;">
+              <i data-lucide="{{ t.icon }}" style="width:15px;height:15px; color:#F2C4C0;"></i>{{ t.label }}
+            </span>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- channels -->
+  <section style="max-width:1180px; margin:0 auto; padding:22px 20px;">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:12px;">
+      <sc-for list="{{ channels }}" as="c" hint-placeholder-count="4">
+        <a href="{{ c.href }}" target="_blank" style="display:flex; align-items:center; gap:12px; text-decoration:none; border:1px solid #EFE2D8; border-radius:16px; padding:14px 16px; background:#fff;" style-hover="border-color:var(--accent,#C05B6B); box-shadow:0 8px 22px -14px rgba(43,35,32,.4);">
+          <span style="display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:11px; background:#FBEDE9;">
+            <i data-lucide="{{ c.icon }}" style="width:20px;height:20px; color:{{ c.color }};"></i>
+          </span>
+          <span style="line-height:1.25;">
+            <span style="display:block; font-weight:700; font-size:14.5px; color:#2B2320;">{{ c.t }}</span>
+            <span style="display:block; font-size:12.5px; color:#8A7D75;">{{ c.s }}</span>
+          </span>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- categories -->
+  <section id="produk" style="max-width:1180px; margin:0 auto; padding:32px 20px 8px;">
+    <div style="text-align:center; margin-bottom:24px;">
+      <h2 style="font-family:'Playfair Display',serif; font-weight:700; font-size:clamp(26px,6vw,38px); margin:0 0 6px; color:#2B2320;">Kategori Produk</h2>
+      <div style="width:54px; height:3px; background:var(--accent,#C05B6B); border-radius:2px; margin:0 auto;"></div>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:14px;">
+      <sc-for list="{{ categories }}" as="cat" hint-placeholder-count="6">
+        <a href="{{ wa }}" target="_blank" style="text-decoration:none; display:block; border:1px solid #F0E6DE; border-radius:18px; overflow:hidden; background:#fff;" style-hover="box-shadow:0 12px 26px -16px rgba(43,35,32,.45); border-color:#EAD9CF;">
+          <image-slot id="{{ cat.id }}" style="width:100%; height:130px; display:block;" shape="rect" placeholder="{{ cat.n }}"></image-slot>
+          <div style="padding:13px 14px; text-align:center;">
+            <span style="display:block; font-weight:700; font-size:15px; color:#2B2320;">{{ cat.n }}</span>
+            <span style="display:block; font-size:12px; color:#9C8F86; margin-top:2px;">{{ cat.sub }}</span>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- brands -->
+  <section style="padding:34px 0 30px; margin-top:20px; background:#FBEDE9;">
+    <div style="max-width:1180px; margin:0 auto; padding:0 20px; text-align:center; margin-bottom:20px;">
+      <h2 style="font-family:'Playfair Display',serif; font-weight:700; font-size:clamp(24px,5.5vw,34px); margin:0 0 8px; color:#2B2320;">Ratusan Brand, Satu Toko</h2>
+      <p style="color:#7C6F67; font-size:15px; margin:0; max-width:520px; margin-inline:auto;">Brand lokal &amp; Asia terlengkap — dari drugstore favorit sampai skincare viral.</p>
+    </div>
+    <div style="overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent); mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);">
+      <div style="display:flex; gap:12px; width:max-content; animation:sc-marquee 34s linear infinite;">
+        <sc-for list="{{ brandsLoop }}" as="b" hint-placeholder-count="14">
+          <span style="white-space:nowrap; background:#fff; border:1px solid #EFDDD5; color:#5A4E48; font-size:15px; font-weight:600; letter-spacing:.02em; padding:11px 20px; border-radius:999px;">{{ b }}</span>
+        </sc-for>
+      </div>
+    </div>
+    <div style="max-width:1180px; margin:22px auto 0; padding:0 20px; text-align:center;">
+      <a href="{{ wa }}" target="_blank" style="display:inline-flex; align-items:center; gap:8px; color:var(--accent,#C05B6B); text-decoration:none; font-weight:700; font-size:14.5px;">
+        Cari brand favoritmu? Tanya stok ke kami <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- best sellers -->
+  <section id="terlaris" style="max-width:1180px; margin:0 auto; padding:40px 20px 8px;">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:22px;">
+      <div>
+        <h2 style="font-family:'Playfair Display',serif; font-weight:700; font-size:clamp(26px,6vw,38px); margin:0 0 4px; color:#2B2320;">Produk Terlaris</h2>
+        <p style="color:#8A7D75; font-size:14.5px; margin:0;">Paling banyak diburu pelanggan kami.</p>
+      </div>
+      <a href="{{ shopee }}" target="_blank" style="white-space:nowrap; color:var(--accent,#C05B6B); text-decoration:none; font-weight:700; font-size:13.5px; display:inline-flex; align-items:center; gap:5px;">Lihat semua <i data-lucide="chevron-right" style="width:15px;height:15px;"></i></a>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:16px;">
+      <sc-for list="{{ products }}" as="p" hint-placeholder-count="6">
+        <div style="border:1px solid #F0E6DE; border-radius:18px; overflow:hidden; background:#fff; display:flex; flex-direction:column;" style-hover="box-shadow:0 14px 30px -18px rgba(43,35,32,.5);">
+          <image-slot id="{{ p.id }}" style="width:100%; height:180px; display:block; background:#F7EFE9;" shape="rect" placeholder="{{ p.brand }}"></image-slot>
+          <div style="padding:14px 15px 16px; display:flex; flex-direction:column; flex:1;">
+            <span style="font-size:11px; font-weight:700; letter-spacing:.08em; color:#B09C92; text-transform:uppercase;">{{ p.brand }}</span>
+            <span style="font-size:14.5px; font-weight:600; color:#2B2320; line-height:1.35; margin:4px 0 10px; min-height:38px;">{{ p.name }}</span>
+            <div style="display:flex; align-items:center; gap:6px; margin-bottom:12px;">
+              <i data-lucide="star" style="width:14px;height:14px; color:#E8A93B; fill:#E8A93B;"></i>
+              <span style="font-size:12.5px; font-weight:600; color:#4A403B;">{{ p.rate }}</span>
+              <span style="font-size:12px; color:#A99C93;">({{ p.cnt }})</span>
+            </div>
+            <div style="margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:10px;">
+              <span style="font-family:'Playfair Display',serif; font-weight:700; font-size:18px; color:#2B2320;">Rp {{ p.price }}</span>
+              <a href="{{ wa }}" target="_blank" aria-label="Order via WhatsApp" style="display:inline-flex; align-items:center; justify-content:center; gap:6px; background:var(--accent,#C05B6B); color:#fff; text-decoration:none; font-size:12.5px; font-weight:700; padding:9px 12px; border-radius:10px;" style-hover="background:#A94D5D;">
+                <i data-lucide="message-circle" style="width:15px;height:15px;"></i> Order
+              </a>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- promo -->
+  <sc-if value="{{ showPromo }}" hint-placeholder-val="{{ true }}">
+  <section id="promo" style="max-width:1180px; margin:44px auto 0; padding:0 20px;">
+    <div style="background:linear-gradient(135deg,#FBEDE9 0%, #F7E1DC 100%); border:1px solid #F2D9D2; border-radius:26px; padding:clamp(24px,5vw,44px); overflow:hidden;">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:28px; align-items:center;">
+        <div>
+          <span style="display:inline-flex; align-items:center; gap:7px; background:var(--accent,#C05B6B); color:#fff; font-size:12px; font-weight:700; letter-spacing:.04em; padding:6px 13px; border-radius:999px;">
+            <i data-lucide="flame" style="width:14px;height:14px;"></i> HANYA MINGGU INI
+          </span>
+          <div style="font-family:'Playfair Display',serif; font-weight:700; color:#2B2320; line-height:1; margin:16px 0 4px;">
+            <span style="display:block; font-size:15px; font-weight:700; color:var(--accent,#C05B6B); letter-spacing:.02em; font-family:'Manrope',sans-serif; margin-bottom:6px;">DISKON HINGGA</span>
+            <span style="font-size:clamp(56px,15vw,88px);">45%</span>
+          </div>
+          <p style="color:#6E625B; font-size:15.5px; line-height:1.6; margin:10px 0 22px; max-width:380px;">Produk skincare &amp; makeup pilihan dengan harga spesial. Stok terbatas — buruan sebelum kehabisan!</p>
+          <div style="display:flex; flex-wrap:wrap; gap:11px;">
+            <a href="{{ wa }}" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:var(--accent,#C05B6B); color:#fff; text-decoration:none; font-weight:700; font-size:15px; padding:14px 22px; border-radius:999px;" style-hover="background:#A94D5D;">
+              <i data-lucide="message-circle" style="width:18px;height:18px;"></i> Belanja via WhatsApp
+            </a>
+            <a href="{{ shopee }}" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid #EAD3CC; color:#2B2320; text-decoration:none; font-weight:700; font-size:15px; padding:14px 22px; border-radius:999px;" style-hover="border-color:var(--accent,#C05B6B);">
+              <i data-lucide="shopping-bag" style="width:18px;height:18px; color:#EE4D2D;"></i> Belanja di Shopee
+            </a>
+          </div>
+        </div>
+        <div>
+          <div style="background:#fff; border-radius:20px; padding:22px; box-shadow:0 20px 40px -28px rgba(43,35,32,.55);">
+            <div style="display:flex; align-items:center; gap:8px; justify-content:center; color:#6E625B; font-size:13.5px; font-weight:600; margin-bottom:16px;">
+              <i data-lucide="clock" style="width:16px;height:16px; color:var(--accent,#C05B6B);"></i> Promo berakhir dalam
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:9px;">
+              <sc-for list="{{ countdown }}" as="u" hint-placeholder-count="4">
+                <div style="text-align:center; background:#FBEDE9; border-radius:13px; padding:12px 4px;">
+                  <div style="font-family:'Playfair Display',serif; font-weight:700; font-size:clamp(24px,6vw,32px); color:#2B2320; line-height:1;">{{ u.v }}</div>
+                  <div style="font-size:11px; font-weight:600; color:#9C8F86; margin-top:5px; text-transform:uppercase; letter-spacing:.05em;">{{ u.l }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="margin-top:18px; display:grid; gap:9px;">
+              <sc-for list="{{ promoPerks }}" as="pk" hint-placeholder-count="3">
+                <div style="display:flex; align-items:center; gap:9px; font-size:13.5px; color:#4A403B;">
+                  <i data-lucide="check" style="width:16px;height:16px; color:var(--accent,#C05B6B);"></i>{{ pk }}
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- reasons -->
+  <section style="max-width:1180px; margin:0 auto; padding:44px 20px 8px;">
+    <div style="text-align:center; margin-bottom:26px;">
+      <h2 style="font-family:'Playfair Display',serif; font-weight:700; font-size:clamp(24px,5.5vw,34px); margin:0; color:#2B2320;">Kenapa Belanja di Station?</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px;">
+      <sc-for list="{{ reasons }}" as="r" hint-placeholder-count="4">
+        <div style="border:1px solid #F0E6DE; border-radius:18px; padding:22px 18px; text-align:center; background:#fff;">
+          <span style="display:inline-flex; align-items:center; justify-content:center; width:52px; height:52px; border-radius:14px; background:#FBEDE9; margin-bottom:12px;">
+            <i data-lucide="{{ r.icon }}" style="width:24px;height:24px; color:var(--accent,#C05B6B);"></i>
+          </span>
+          <div style="font-weight:700; font-size:15.5px; color:#2B2320; margin-bottom:4px;">{{ r.t }}</div>
+          <div style="font-size:13px; color:#8A7D75; line-height:1.5;">{{ r.d }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- visit store -->
+  <section id="toko" style="max-width:1180px; margin:0 auto; padding:40px 20px 8px;">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px; align-items:stretch;">
+      <div style="border-radius:22px; overflow:hidden; min-height:280px; background-image:linear-gradient(180deg, rgba(28,20,18,.05), rgba(28,20,18,.35)), url('uploads/img-2.jpg'); background-size:cover; background-position:center; display:flex; align-items:flex-end;">
+        <div style="padding:22px; color:#fff;">
+          <div style="font-family:'Playfair Display',serif; font-size:24px; font-weight:700; line-height:1.15;">Kunjungi toko kami<br>langsung di Medan</div>
+        </div>
+      </div>
+      <div style="border:1px solid #F0E6DE; border-radius:22px; padding:clamp(22px,4vw,32px); background:#fff; display:flex; flex-direction:column;">
+        <h2 style="font-family:'Playfair Display',serif; font-weight:700; font-size:clamp(24px,5vw,32px); margin:0 0 18px; color:#2B2320;">Station Cosmetics Store</h2>
+        <div style="display:flex; gap:13px; margin-bottom:16px;">
+          <i data-lucide="map-pin" style="width:20px;height:20px; color:var(--accent,#C05B6B); flex-shrink:0; margin-top:2px;"></i>
+          <div style="font-size:14.5px; color:#4A403B; line-height:1.6;">Jl. Kelambir 5 No.21 CD, Cinta Damai, Kec. Medan Helvetia, Kota Medan, Sumatera Utara 20126</div>
+        </div>
+        <div style="display:flex; gap:13px; margin-bottom:22px; padding-top:16px; border-top:1px solid #F3EAE3;">
+          <i data-lucide="clock" style="width:20px;height:20px; color:var(--accent,#C05B6B); flex-shrink:0; margin-top:2px;"></i>
+          <div style="font-size:14.5px; color:#4A403B; line-height:1.7;">
+            <div><strong style="font-weight:700;">Senin – Sabtu</strong> · 09.00 – 21.00 WIB</div>
+            <div><strong style="font-weight:700;">Minggu &amp; Libur</strong> · 10.00 – 20.00 WIB</div>
+          </div>
+        </div>
+        <div style="margin-top:auto; display:flex; flex-wrap:wrap; gap:11px;">
+          <a href="https://maps.app.goo.gl/mcPcQtVK5fywxdiU7" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:var(--accent,#C05B6B); color:#fff; text-decoration:none; font-weight:700; font-size:14.5px; padding:13px 20px; border-radius:999px;" style-hover="background:#A94D5D;">
+            <i data-lucide="navigation" style="width:17px;height:17px;"></i> Dapatkan Arah
+          </a>
+          <a href="https://wa.me/6281376147334" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid #EAD3CC; color:#2B2320; text-decoration:none; font-weight:700; font-size:14.5px; padding:13px 20px; border-radius:999px;" style-hover="border-color:var(--accent,#C05B6B);">
+            <i data-lucide="message-circle" style="width:17px;height:17px; color:#25A25A;"></i> Chat WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- faq -->
+  <section id="faq" style="max-width:820px; margin:0 auto; padding:44px 20px 12px;">
+    <div style="text-align:center; margin-bottom:24px;">
+      <h2 style="font-family:'Playfair Display',serif; font-weight:700; font-size:clamp(24px,5.5vw,34px); margin:0; color:#2B2320;">Pertanyaan yang Sering Diajukan</h2>
+    </div>
+    <div style="display:grid; gap:11px;">
+      <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="5">
+        <div style="border:1px solid #F0E6DE; border-radius:15px; overflow:hidden; background:#fff;">
+          <button onClick="{{ f.toggle }}" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:14px; text-align:left; background:transparent; border:0; cursor:pointer; padding:17px 18px; font-family:inherit; font-size:15px; font-weight:600; color:#2B2320;">
+            <span>{{ f.q }}</span>
+            <i data-lucide="{{ f.chevron }}" style="width:18px;height:18px; color:var(--accent,#C05B6B); flex-shrink:0;"></i>
+          </button>
+          <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:0 18px 18px; font-size:14px; color:#6E625B; line-height:1.65;">{{ f.a }}</div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+    <div style="text-align:center; margin-top:22px;">
+      <a href="{{ wa }}" target="_blank" style="display:inline-flex; align-items:center; gap:8px; color:var(--accent,#C05B6B); text-decoration:none; font-weight:700; font-size:14.5px;">
+        Masih ada pertanyaan? Chat kami <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- footer -->
+  <footer style="margin-top:44px; background:#F3E5D5;">
+    <div style="max-width:1180px; margin:0 auto; padding:44px 20px 24px; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:30px;">
+      <div>
+        <div style="font-family:'Playfair Display',serif; font-size:22px; font-weight:700; letter-spacing:.22em; color:#2B2320;">STATION</div>
+        <div style="font-size:9px; font-weight:700; letter-spacing:.5em; color:var(--accent,#C05B6B); margin:2px 0 14px; padding-left:.5em;">COSMETICS</div>
+        <p style="font-size:13.5px; color:#7C6F67; line-height:1.6; max-width:240px; margin:0 0 16px;">Toko kosmetik &amp; skincare terlengkap dan terpercaya di Medan.</p>
+        <div style="display:flex; gap:10px;">
+          <sc-for list="{{ socials }}" as="s" hint-placeholder-count="4">
+            <a href="{{ s.href }}" target="_blank" aria-label="{{ s.label }}" style="display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:10px; background:#fff; color:#5A4E48; text-decoration:none;" style-hover="color:var(--accent,#C05B6B);">
+              <i data-lucide="{{ s.icon }}" style="width:18px;height:18px;"></i>
+            </a>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div style="font-weight:700; font-size:14px; color:#2B2320; margin-bottom:14px;">Menu</div>
+        <sc-for list="{{ navLinks }}" as="link" hint-placeholder-count="5">
+          <a href="{{ link.href }}" style="display:block; text-decoration:none; color:#7C6F67; font-size:13.5px; padding:5px 0;" style-hover="color:var(--accent,#C05B6B);">{{ link.label }}</a>
+        </sc-for>
+      </div>
+      <div>
+        <div style="font-weight:700; font-size:14px; color:#2B2320; margin-bottom:14px;">Belanja</div>
+        <sc-for list="{{ shopLinks }}" as="link" hint-placeholder-count="3">
+          <a href="{{ link.href }}" target="_blank" style="display:block; text-decoration:none; color:#7C6F67; font-size:13.5px; padding:5px 0;" style-hover="color:var(--accent,#C05B6B);">{{ link.label }}</a>
+        </sc-for>
+      </div>
+      <div>
+        <div style="font-weight:700; font-size:14px; color:#2B2320; margin-bottom:14px;">Newsletter</div>
+        <p style="font-size:13px; color:#7C6F67; line-height:1.6; margin:0 0 12px;">Info promo terbaru langsung ke email kamu.</p>
+        <form onSubmit="{{ noSubmit }}" style="display:flex; gap:8px;">
+          <input type="email" placeholder="Email kamu" style="flex:1; min-width:0; border:1px solid #E3D3C6; border-radius:10px; padding:11px 13px; font-size:13.5px; background:#fff; color:#2B2320; outline:none;">
+          <button type="submit" aria-label="Kirim" style="display:inline-flex; align-items:center; justify-content:center; width:44px; border:0; border-radius:10px; background:var(--accent,#C05B6B); color:#fff; cursor:pointer;">
+            <i data-lucide="send" style="width:17px;height:17px;"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+    <div style="border-top:1px solid #E7D6C6;">
+      <div style="max-width:1180px; margin:0 auto; padding:18px 20px; text-align:center; font-size:12.5px; color:#9C8F86;">© 2026 Station Cosmetics. Semua hak cipta dilindungi.</div>
+    </div>
+  </footer>
+
+  <!-- floating whatsapp -->
+  <a href="{{ wa }}" target="_blank" aria-label="Chat WhatsApp" style="position:fixed; right:16px; bottom:18px; z-index:60; display:inline-flex; align-items:center; gap:9px; background:#25A25A; color:#fff; text-decoration:none; font-weight:700; font-size:14.5px; padding:13px 18px; border-radius:999px; box-shadow:0 12px 28px -8px rgba(37,162,90,.7); animation:sc-float 3.2s ease-in-out infinite;" style-hover="background:#1F8E4F;">
+    <i data-lucide="message-circle" style="width:20px;height:20px;"></i>
+    <span>WhatsApp</span>
+  </a>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:430,&quot;height&quot;:900},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#C05B6B&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;waNumber&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;081376147334&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Kontak&quot;},&quot;shopeeUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://s.shopee.co.id/7prR3b2fkT&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Kontak&quot;},&quot;announce&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Diskon minggu ini hingga 45% — klik untuk lihat promo&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Konten&quot;},&quot;showPromo&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Konten&quot;}}">
+class Component extends DCLogic {
+  state = { menuOpen: false, openFaq: 0, now: Date.now() };
+
+  componentDidMount() {
+    // persistent promo end (counts down consistently across reloads)
+    let end = null;
+    try { end = localStorage.getItem('sc_promo_end'); } catch (e) {}
+    if (!end) {
+      end = String(Date.now() + (6 * 24 + 12) * 3600 * 1000 + 45 * 60000 + 30000);
+      try { localStorage.setItem('sc_promo_end', end); } catch (e) {}
+    }
+    this.promoEnd = parseInt(end, 10);
+    this._timer = setInterval(() => this.setState({ now: Date.now() }), 1000);
+    this._drawIcons();
+  }
+  componentDidUpdate() { this._drawIcons(); }
+  componentWillUnmount() { clearInterval(this._timer); }
+
+  _drawIcons() {
+    let tries = 0;
+    const run = () => {
+      if (window.lucide && window.lucide.createIcons) { window.lucide.createIcons(); }
+      else if (tries++ < 20) { setTimeout(run, 150); }
+    };
+    run();
+  }
+
+  toggleMenu = () => this.setState(s => ({ menuOpen: !s.menuOpen }));
+  closeMenu = () => this.setState({ menuOpen: false });
+  noSubmit = (e) => { e.preventDefault(); };
+
+  pad(n) { return String(n).padStart(2, '0'); }
+
+  renderVals() {
+    const accent = this.props.accent ?? '#C05B6B';
+    const num = (this.props.waNumber ?? '6282112345678').replace(/[^0-9]/g, '');
+    const wa = 'https://wa.me/' + num + '?text=' + encodeURIComponent('Halo Station Cosmetics, saya mau tanya produk 😊');
+    const shopee = this.props.shopeeUrl ?? 'https://shopee.co.id/';
+    const ig = 'https://instagram.com/station.cosmetics';
+    const tiktok = 'https://tiktok.com/@station.cosmetics';
+    const maps = 'https://maps.google.com/?q=Jl.+Setia+Budi+Medan+Selayang';
+
+    const navLinks = [
+      { label: 'Kategori', href: '#produk' },
+      { label: 'Terlaris', href: '#terlaris' },
+      { label: 'Promo', href: '#promo' },
+      { label: 'Toko', href: '#toko' },
+      { label: 'FAQ', href: '#faq' },
+    ];
+
+    const trust = [
+      { icon: 'badge-check', label: '100% Original' },
+      { icon: 'store', label: 'Toko fisik nyata' },
+      { icon: 'zap', label: 'Respon cepat' },
+    ];
+
+    const channels = [
+      { icon: 'camera', t: 'Instagram', s: '@station.cosmetics', color: '#C2408E', href: ig },
+      { icon: 'music', t: 'TikTok', s: '@station.cosmetics', color: '#111111', href: tiktok },
+      { icon: 'shopping-bag', t: 'Shopee', s: 'Station Cosmetics', color: '#EE4D2D', href: shopee },
+      { icon: 'map-pin', t: 'Toko Offline', s: 'Medan Selayang', color: accent, href: maps },
+    ];
+
+    const categories = [
+      { id: 'cat-skincare', n: 'Skincare', sub: 'Perawatan kulit' },
+      { id: 'cat-makeup', n: 'Makeup', sub: 'Riasan wajah' },
+      { id: 'cat-bodycare', n: 'Bodycare', sub: 'Perawatan tubuh' },
+      { id: 'cat-haircare', n: 'Haircare', sub: 'Perawatan rambut' },
+      { id: 'cat-parfum', n: 'Parfum', sub: 'Wewangian' },
+      { id: 'cat-tools', n: 'Beauty Tools', sub: 'Alat kecantikan' },
+    ];
+
+    const brands = ['Wardah', 'Make Over', 'Emina', 'Somethinc', 'Skintific', 'Safi', 'LT Pro', 'Luxcrime', 'Dazzle Me', 'Azarine', 'You', 'Implora', 'NAMA', 'ESQA', 'Dear Me'];
+    const brandsLoop = brands.concat(brands);
+
+    const products = [
+      { id: 'p1', brand: 'Skintific', name: '5X Ceramide Barrier Moisturizer Gel', price: '129.000', rate: '4.9', cnt: '1.2K' },
+      { id: 'p2', brand: 'Somethinc', name: 'Niacinamide Brightening Serum', price: '139.000', rate: '4.8', cnt: '980' },
+      { id: 'p3', brand: 'ESQA', name: 'Flawless Liquid Concealer', price: '95.000', rate: '4.7', cnt: '760' },
+      { id: 'p4', brand: 'Dear Me Beauty', name: 'Airy Poreless Powder', price: '109.000', rate: '4.8', cnt: '1.1K' },
+      { id: 'p5', brand: 'Azarine', name: 'Hydrasoothe Sunscreen Gel SPF 45', price: '65.000', rate: '4.9', cnt: '2K' },
+      { id: 'p6', brand: 'Evangeline', name: 'Eau De Parfum Black Vanilla', price: '35.000', rate: '4.7', cnt: '540' },
+    ];
+
+    const reasons = [
+      { icon: 'badge-check', t: '100% Original', d: 'Produk asli & bergaransi resmi.' },
+      { icon: 'tag', t: 'Harga Terbaik', d: 'Bersaing dan terjangkau.' },
+      { icon: 'store', t: 'Bisa Ambil di Toko', d: 'Datang langsung ke Medan.' },
+      { icon: 'headphones', t: 'Customer Care', d: 'Ramah dan siap membantu.' },
+    ];
+
+    const promoPerks = ['Diskon hingga 45%', 'Stok terbatas', 'Berlaku minggu ini'];
+
+    // countdown
+    const remain = Math.max(0, (this.promoEnd || Date.now()) - this.state.now);
+    const d = Math.floor(remain / 86400000);
+    const h = Math.floor((remain % 86400000) / 3600000);
+    const m = Math.floor((remain % 3600000) / 60000);
+    const s = Math.floor((remain % 60000) / 1000);
+    const countdown = [
+      { v: this.pad(d), l: 'Hari' },
+      { v: this.pad(h), l: 'Jam' },
+      { v: this.pad(m), l: 'Menit' },
+      { v: this.pad(s), l: 'Detik' },
+    ];
+
+    const faqData = [
+      { q: 'Apakah produk di Station Cosmetics 100% original?', a: 'Ya. Semua produk dijamin 100% original dan bergaransi resmi dari brand.' },
+      { q: 'Bisa pesan online lalu ambil di toko?', a: 'Bisa. Chat kami via WhatsApp untuk reservasi produk, lalu ambil langsung di toko Medan Selayang.' },
+      { q: 'Berapa lama proses pengiriman?', a: 'Pesanan diproses di hari yang sama dan dikirim cepat ke seluruh Indonesia via ekspedisi pilihanmu.' },
+      { q: 'Apakah bisa COD (Cash on Delivery)?', a: 'COD tersedia untuk area tertentu di Medan. Silakan tanyakan ke kami via WhatsApp.' },
+      { q: 'Bagaimana cara melakukan retur produk?', a: 'Hubungi kami maksimal 2x24 jam setelah barang diterima dengan menyertakan bukti pembelian.' },
+      { q: 'Bagaimana cara tahu promo terbaru?', a: 'Ikuti Instagram & TikTok @station.cosmetics, atau minta info promo langsung via WhatsApp.' },
+    ];
+    const faqs = faqData.map((f, i) => ({
+      q: f.q,
+      a: f.a,
+      open: this.state.openFaq === i,
+      chevron: this.state.openFaq === i ? 'chevron-up' : 'chevron-down',
+      toggle: () => this.setState(st => ({ openFaq: st.openFaq === i ? -1 : i })),
+    }));
+
+    const socials = [
+      { icon: 'camera', label: 'Instagram', href: ig },
+      { icon: 'music', label: 'TikTok', href: tiktok },
+      { icon: 'shopping-bag', label: 'Shopee', href: shopee },
+      { icon: 'message-circle', label: 'WhatsApp', href: wa },
+    ];
+    const shopLinks = [
+      { label: 'Shopee', href: shopee },
+      { label: 'TikTok Shop', href: tiktok },
+      { label: 'WhatsApp Order', href: wa },
+    ];
+
+    return {
+      accent, wa, shopee, maps,
+      announce: this.props.announce ?? 'Diskon minggu ini hingga 45% — klik untuk lihat promo',
+      showPromo: this.props.showPromo ?? true,
+      menuOpen: this.state.menuOpen,
+      toggleMenu: this.toggleMenu, closeMenu: this.closeMenu, noSubmit: this.noSubmit,
+      navLinks, trust, channels, categories, brandsLoop, products,
+      reasons, promoPerks, countdown, faqs, socials, shopLinks,
+    };
+  }
+}
+</script>
+</body>
+</html>
