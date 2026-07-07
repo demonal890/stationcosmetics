@@ -1,11 +1,13 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Dokumentasi lokal (jangan commit)
+# Dokumentasi lokal & tracking (jangan commit)
 CLAUDE.md
 ROADMAP.md
 PRD.md
 PROMPTS.md
 README.md
+MEMORY.md
+phase-*-status.md
 supabase/migrations/
 
 # dependencies
@@ -47,3 +49,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build cache
+.turbo/
+.turbopack/
